@@ -10,7 +10,7 @@ const questions = [
     answer_b: 'useConst()',
     answer_c: 'useReducer()',
     answer_d: 'All of the above',
-    correct_answer: 'b'
+    correct_answer: 'useConst()'
   },
   {
     id: 2,
@@ -19,30 +19,55 @@ const questions = [
     answer_b: 'useApi()',
     answer_c: 'useEffect()',
     answer_d: 'useRequest()',
-    correct_answer: 'c'
+    correct_answer: 'useEffect()'
   }
 ];
 
 const Question = () => {
   const context = useContext(QuizContext);
   const setScore = context.setScore;
+  const score = context.score;
+
+  const [captureAnswer, setCaptureAnswer] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  console.log(currentQuestion);
 
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
 
   let question = questions[currentQuestion];
-  console.log(question);
+
+  const handleSelectedAnswer = e => {
+    setCaptureAnswer(e.target.value);
+
+    setIsDisabled(true);
+  };
 
   const nextQuestion = e => {
     e.preventDefault();
+    setIsDisabled(false);
+    // if no answer selected user cant proceed
+    if (captureAnswer === '') {
+      return alert('You must select an answer');
+    }
 
+    if (captureAnswer === question.correct_answer) {
+      setScore(score + 1);
+    }
     setCurrentQuestion(currentQuestion => currentQuestion + 1);
+    setCaptureAnswer('');
   };
 
   const submitBtn = () => {
+    // if no answer selected user cant proceed
+
+    if (captureAnswer === '') {
+      return alert('You must select an answer');
+    }
     setIsSubmitClicked(true);
+    if (captureAnswer === question.correct_answer) {
+      setScore(score + 1);
+    }
   };
 
   if (isSubmitClicked === true) {
@@ -54,10 +79,38 @@ const Question = () => {
       <div id='question-container'>
         <div id='question'>{question.question}</div>
         <div id='answer-buttons' className='btn-grid'>
-          <button className='btn'>{question.answer_a}</button>
-          <button className='btn'>{question.answer_b}</button>
-          <button className='btn'>{question.answer_c}</button>
-          <button className='btn'>{question.answer_d}</button>
+          <button
+            onClick={handleSelectedAnswer}
+            value={question.answer_a}
+            className='btn'
+            disabled={isDisabled}
+          >
+            {question.answer_a}
+          </button>
+          <button
+            onClick={handleSelectedAnswer}
+            value={question.answer_b}
+            className='btn'
+            disabled={isDisabled}
+          >
+            {question.answer_b}
+          </button>
+          <button
+            onClick={handleSelectedAnswer}
+            value={question.answer_c}
+            className='btn'
+            disabled={isDisabled}
+          >
+            {question.answer_c}
+          </button>
+          <button
+            onClick={handleSelectedAnswer}
+            value={question.answer_d}
+            className='btn'
+            disabled={isDisabled}
+          >
+            {question.answer_d}
+          </button>
         </div>
       </div>
       <div className='controls'>

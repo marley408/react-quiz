@@ -15,7 +15,7 @@ const Score = () => {
   };
 
   if (isRestartClicked === true) {
-    setScore(null);
+    setScore(0);
     setIsStartBtnClicked(false);
     return <Start />;
   }
@@ -23,7 +23,7 @@ const Score = () => {
     <div className='container'>
       <div id='score-container'>
         <div id='score-header'>Score:</div>
-        <div id='score'>{score} out of 10</div>
+        <div id='score'>{score} out of 2</div>
       </div>
       <div className='controls'>
         <button onClick={restartBtn} id='restart-btn' className='restart-btn '>

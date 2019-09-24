@@ -5,7 +5,7 @@ export const QuizContext = createContext({});
 
 // create user provider. this holds info and passes it down to
 export const QuizProvider = props => {
-  const [score, setScore] = useState(2);
+  const [score, setScore] = useState(0);
   const [isStartBtnClicked, setIsStartBtnClicked] = useState(false);
 
   // need to set inital state because page will refresh after login or register

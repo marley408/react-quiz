@@ -11,7 +11,6 @@ const Start = () => {
     e.preventDefault();
 
     setIsStartBtnClicked(true);
-    console.log('start btn');
   };
 
   if (isStartBtnClicked === true) {
